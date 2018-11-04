@@ -1,10 +1,12 @@
 <template>
-  <div class="week">
-    <Hour v-for="(hour, index) in 168"
-          :key="index"
-          :index="index"
-          :mouseDown="mouseDown"
-    />
+  <div>
+    <div class="week">
+      <Hour v-for="(hour, index) in 168"
+            :key="index"
+            :index="index"
+            :mouseDown="mouseDown"
+      />
+    </div>
   </div>
 </template>
 
@@ -18,7 +20,9 @@ export default {
   },
   data () {
     return {
-      mouseDown: false
+      mouseDown: false,
+      lastTouch: null,
+      lastElem: null
     }
   },
   methods: {
@@ -27,11 +31,25 @@ export default {
     },
     stopDrag () {
       this.mouseDown = false
+    },
+    handleTouchmove (e) {
+      e.preventDefault()
+      e.stopPropagation()
+      var changedTouch = e.changedTouches[0]
+      var elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY)
+      if (elem.__vue__) {
+        if (elem.__vue__.$vnode.key != this.lastElem) {
+          elem.__vue__.toggleBusy()
+        }
+        this.lastElem = elem.__vue__.$vnode.key
+      }
     }
   },
   mounted () {
     window.addEventListener('mousedown', this.startDrag)
     window.addEventListener('mouseup', this.stopDrag)
+    window.addEventListener('touchmove', this.handleTouchmove) 
+    window.addEventListener('mousemove', this.handleMouseover)
   }
 }
 </script>
@@ -39,14 +57,16 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .week {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
   padding: 1rem;
   display: grid;
   grid-auto-flow: column;
   grid-template-rows: repeat(24, 1fr);
   grid-template-columns: repeat(7, 1fr);
-  width: 100vw;
   height: 100vh;
   justify-items: center;
   align-items: center;
+  background: #111;
 }
 </style>
