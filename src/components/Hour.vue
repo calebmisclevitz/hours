@@ -1,6 +1,6 @@
 <template>
   <div class="hour"
-       :class="{ 'busy': busy }"
+       :class="{ 'busy': isBusy }"
        :mouseDown="mouseDown"
        @mouseover="handleMouseover"
        @mousedown="toggleBusy"
@@ -11,24 +11,35 @@
 <script>
 export default {
   name: 'Hour',
+  data () {
+    return {
+      isBusy: this.busy,
+      newForecasted: this.forecasted
+    }
+  },
   props: {
     msg: String,
     index: Number,
-    mouseDown: Boolean
-  },
-  data () {
-    return {
-      busy: false
-    }
+    mouseDown: Boolean,
+    busy: Boolean,
+    forecasted: String,
+    id: String,
+    armedForecast: String
   },
   methods: {
     handleMouseover () {
       if (this.mouseDown) {
-        this.busy = !this.busy
+        this.toggleBusy()
       }
     },
+    handleHourTouch () {
+      this.toggleBusy()
+    },
     toggleBusy () {
-        this.busy = !this.busy
+      this.isBusy = !this.isBusy
+    },
+    paintForecast (currentForecast) {
+      this.$emit('paintForecast', currentForecast)
     }
   }
 }

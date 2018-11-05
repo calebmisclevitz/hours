@@ -11,6 +11,32 @@ export default {
   name: 'app',
   components: {
     Week
+  },
+  data () {
+    return {
+      categories: [
+        {
+          name: 'unassigned',
+          hours: [],
+          color: 'transparent'
+        },
+        {
+          name: 'sleep',
+          hours: [],
+          color: '#00f'
+        },
+        {
+          name: 'work',
+          hours: [],
+          color: '#0f0'
+        },
+        {
+          name: 'friends',
+          hours: [],
+          color: '#f00'
+        }
+      ]
+    }
   }
 }
 </script>

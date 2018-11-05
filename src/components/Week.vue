@@ -1,9 +1,14 @@
 <template>
   <div>
     <div class="week">
-      <Hour v-for="(hour, index) in 168"
+      <Hour v-for="(hour, index) in hours"
             :key="index"
             :index="index"
+            :busy="hour.busy"
+            :forecasted="hour.forecasted"
+            :id="hour.id"
+            :armedForecast="armedForecast"
+            v-on:paintForecast="handlePaintForecast()"
             :mouseDown="mouseDown"
       />
     </div>
@@ -12,6 +17,7 @@
 
 <script>
 import Hour from './Hour.vue'
+import moment from 'moment'
 
 export default {
   name: 'Week',
@@ -21,8 +27,10 @@ export default {
   data () {
     return {
       mouseDown: false,
-      lastTouch: null,
-      lastElem: null
+      lastElem: null,
+      weekOf: moment('2018-11-05T00:00:00'),
+      hours: [],
+      armedForecast: 'sleep'
     }
   },
   methods: {
@@ -43,6 +51,30 @@ export default {
         }
         this.lastElem = elem.__vue__.$vnode.key
       }
+    },
+    // handleMouseover (e) {
+    //   var elem = document.elementFromPoint(e.clientX, e.clientY)
+    //   if (elem.__vue__) {
+    //     if (elem.__vue__.$vnode.key != this.lastElem) {
+    //       console.log(elem)
+    //       elem.__vue__.handleHourTouch()
+    //     }
+    //     this.lastElem = elem.__vue__.$vnode.key
+    //   }
+    // },
+    setHours () {
+      for (let i = 0; i < 168; i++) {
+        let newHour = {
+          timestamp: moment(this.weekOf).add(i, 'hours'),
+          id: moment(this.weekOf).add(i, 'hours').format(),
+          forecasted: 'unassigned',
+          busy: false
+        }
+        this.hours.push(newHour)
+      }
+    },
+    handlePaintForecast (armedForecast) {
+      console.log(armedForecast)
     }
   },
   mounted () {
@@ -50,6 +82,7 @@ export default {
     window.addEventListener('mouseup', this.stopDrag)
     window.addEventListener('touchmove', this.handleTouchmove) 
     window.addEventListener('mousemove', this.handleMouseover)
+    this.setHours()
   }
 }
 </script>

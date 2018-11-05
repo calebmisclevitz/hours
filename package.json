@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "inobounce": "^0.1.6",
+    "moment": "^2.22.2",
     "vue": "^2.5.17",
     "vue2-hammer": "^2.1.2"
   },
