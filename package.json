@@ -8,10 +8,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "inobounce": "^0.1.6",
+    "inobounce": "file:../../inobounce",
     "moment": "^2.22.2",
-    "vue": "^2.5.17",
-    "vue2-hammer": "^2.1.2"
+    "vue": "^2.5.17"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.1.1",

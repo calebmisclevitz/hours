@@ -1,22 +1,16 @@
 <template>
-  <div class="hour"
-       :class="{ 'busy': isBusy }"
-       :mouseDown="mouseDown"
+  <time class="hour"
+       :class="{ 'busy': busy }"
        @mouseover="handleMouseover"
-       @mousedown="toggleBusy"
+       @mousedown="paintForecast"
+       v-bind:datetime="id"
        >
-  </div>
+  </time>
 </template>
 
 <script>
 export default {
   name: 'Hour',
-  data () {
-    return {
-      isBusy: this.busy,
-      newForecasted: this.forecasted
-    }
-  },
   props: {
     msg: String,
     index: Number,
@@ -29,17 +23,17 @@ export default {
   methods: {
     handleMouseover () {
       if (this.mouseDown) {
-        this.toggleBusy()
+        this.paintForecast()
       }
     },
     handleHourTouch () {
-      this.toggleBusy()
+      this.paintForecast()
     },
     toggleBusy () {
       this.isBusy = !this.isBusy
     },
-    paintForecast (currentForecast) {
-      this.$emit('paintForecast', currentForecast)
+    paintForecast () {
+      this.$emit('paintForecast', this)
     }
   }
 }
@@ -55,14 +49,15 @@ export default {
   border: 1px solid #444;
   position: relative;
   animation: pulsedown 600ms cubic-bezier(0.0, 0.0, 0.2, 1);
+  margin-top: .125rem;
 }
 
 .hour:after {
   content: '';
   position: absolute;
-  top: -1rem;
+  top: -.25rem;
   right: -1rem;
-  bottom: -1rem;
+  bottom: -.25rem;
   left: -1rem;
 }
 

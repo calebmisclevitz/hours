@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
+import iNoBounce from 'inobounce'
 
+iNoBounce.enable()
 Vue.config.productionTip = false
-window.x = require('inobounce')
 
 new Vue({
   render: h => h(App),
