@@ -23,7 +23,7 @@ export default {
     color: #666;
     font-size: .875rem;
     padding: 1rem;
-    margin: 0 -1rem;
+    margin: 0 -1rem -1rem -1rem;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
