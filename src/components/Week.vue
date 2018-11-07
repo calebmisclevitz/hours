@@ -192,7 +192,7 @@ export default {
   margin-bottom: 1.5rem;
   text-align: right;
   line-height: 1.25rem;
-  font-size: .875rem;
+  font-size: 1rem;
 }
 .week-header__date {
   color: #eee;
