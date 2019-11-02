@@ -1,49 +1,63 @@
 <template>
-  <time
+  <label>
+    {{hour.timestamp.format("dddd, hA")}}
+    <select>
+      <option
+        v-for="category in categories"
+        :key="category.name"
+        :value="category.name"
+      >{{ category.name }}</option>
+    </select>
+  </label>
+  <!-- <time
     class="hour"
     :class="{ 'busy': busy }"
     :style="{backgroundColor: color}"
     @mouseover="handleMouseover"
     @mousedown="paintForecast"
     v-bind:datetime="id"
-  ></time>
+  ></time>-->
 </template>
 
 <script>
+import Moment from "moment";
+
 export default {
   name: "Hour",
   props: {
-    msg: String,
-    index: Number,
-    mouseDown: Boolean,
-    busy: Boolean,
-    forecasted: String,
-    color: String,
-    id: String,
-    armedForecast: String
+    hour: Object,
+    categories: Array
+    // msg: String,
+    // index: Number,
+    // mouseDown: Boolean,
+    // busy: Boolean,
+    // forecasted: String,
+    // color: String,
+    // id: String,
+    // armedForecast: String
   },
   methods: {
-    handleMouseover() {
-      if (this.mouseDown) {
-        this.paintForecast();
-      }
-    },
-    handleHourTouch() {
-      this.paintForecast();
-    },
-    toggleBusy() {
-      this.isBusy = !this.isBusy;
-    },
-    paintForecast() {
-      this.$emit("paintForecast", this);
-    }
+    // handleMouseover() {
+    //   if (this.mouseDown) {
+    //     this.paintForecast();
+    //   }
+    // },
+    // handleHourTouch() {
+    //   this.paintForecast();
+    // },
+    // toggleBusy() {
+    //   this.isBusy = !this.isBusy;
+    // },
+    // paintForecast() {
+    //   this.$emit("paintForecast", this);
+    // }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.hour {
+/* .hour {
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 0.5rem;
@@ -91,5 +105,5 @@ export default {
   100% {
     transform: scale(1);
   }
-}
+} */
 </style>

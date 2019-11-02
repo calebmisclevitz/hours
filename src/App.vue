@@ -1,23 +1,26 @@
 <template>
   <div id="app">
-    <Week msg="Hello from week" :armedForecast="armedForecast" :categories="categories" />
-    <ForecastBar :categories="categories" v-on:armForecast="handleArmForecast($event)" />
+    <hour v-for="hour in hours" :key="hour.id" :hour="hour" :categories="categories" />
   </div>
 </template>
 
 <script>
-import Week from "./components/Week.vue";
-import ForecastBar from "./components/ForecastBar.vue";
+import Hour from "./components/Hour.vue";
+// import Week from "./components/Week.vue";
+// import ForecastBar from "./components/ForecastBar.vue";
+import moment from "moment";
 
 export default {
   name: "app",
   components: {
-    Week,
-    ForecastBar
+    Hour
+    // Week,
+    // ForecastBar
   },
   data() {
     return {
-      armedForecast: "Clear",
+      weekOf: moment("2018-11-05T00:00:00"),
+      selectedCategory: "Clear",
       categories: [
         {
           name: "Clear",
@@ -39,14 +42,26 @@ export default {
           hours: [],
           color: "#f00"
         }
-      ]
+      ],
+      hours: []
     };
   },
   methods: {
-    handleArmForecast(category) {
-      console.log(category.name);
-      this.armedForecast = category.name;
+    initHours() {
+      for (let i = 0; i < 168; i++) {
+        let newHour = {
+          timestamp: moment(this.weekOf).add(i, "hours"),
+          id: moment(this.weekOf)
+            .add(i, "hours")
+            .format(),
+          category: "Clear"
+        };
+        this.hours.push(newHour);
+      }
     }
+  },
+  mounted() {
+    this.initHours();
   }
 };
 </script>
@@ -192,7 +207,7 @@ body {
   justify-content: center;
   flex-direction: column;
   overflow: hidden;
-  background: #000;
+  /* background: #000; */
 }
 
 #app {
