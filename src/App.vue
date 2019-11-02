@@ -24,22 +24,18 @@ export default {
       categories: [
         {
           name: "Clear",
-          hours: [],
           color: "#666"
         },
         {
           name: "Sleep",
-          hours: [],
           color: "#00f"
         },
         {
           name: "Work",
-          hours: [],
           color: "#0f0"
         },
         {
           name: "Friends",
-          hours: [],
           color: "#f00"
         }
       ],

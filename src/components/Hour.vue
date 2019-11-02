@@ -1,22 +1,14 @@
 <template>
-  <label>
-    {{hour.timestamp.format("dddd, hA")}}
-    <select>
+  <label :style="{backgroundColor: category.color}">
+    <time :datetime="hour.id">{{hour.timestamp.format("dddd, hA")}}</time>
+    <select v-model="hour.category">
       <option
         v-for="category in categories"
-        :key="category.name"
+        :key="hour.id + category.name"
         :value="category.name"
       >{{ category.name }}</option>
     </select>
   </label>
-  <!-- <time
-    class="hour"
-    :class="{ 'busy': busy }"
-    :style="{backgroundColor: color}"
-    @mouseover="handleMouseover"
-    @mousedown="paintForecast"
-    v-bind:datetime="id"
-  ></time>-->
 </template>
 
 <script>
@@ -27,14 +19,13 @@ export default {
   props: {
     hour: Object,
     categories: Array
-    // msg: String,
-    // index: Number,
-    // mouseDown: Boolean,
-    // busy: Boolean,
-    // forecasted: String,
-    // color: String,
-    // id: String,
-    // armedForecast: String
+  },
+  computed: {
+    category() {
+      return this.categories.find(object => {
+        return object.name === this.hour.category;
+      });
+    }
   },
   methods: {
     // handleMouseover() {
@@ -56,7 +47,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 /* .hour {
   width: 0.5rem;
   height: 0.5rem;
