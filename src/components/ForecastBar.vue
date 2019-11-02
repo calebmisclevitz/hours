@@ -5,6 +5,7 @@
       :key="category.id"
       class="forecast-bar__category"
       :style="{ borderColor: category.color, color: category.color }"
+      @click="armForecast(category)"
     >{{category.name}}</li>
   </ul>
 </template>
@@ -14,6 +15,11 @@ export default {
   name: "ForecastBar",
   props: {
     categories: Array
+  },
+  methods: {
+    armForecast(category) {
+      this.$emit("armForecast", category);
+    }
   }
 };
 </script>

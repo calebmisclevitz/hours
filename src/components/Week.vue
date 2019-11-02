@@ -16,163 +16,186 @@
         <li class="hours-legend__label">9p</li>
       </ul>
       <h2 class="day-label">M</h2>
-      <Hour v-for="(hour, index) in hoursInDay(0)"
-            :key="hour.id"
-            :index="index"
-            :busy="hour.busy"
-            :forecasted="hour.forecasted"
-            :id="hour.id"
-            v-on:paintForecast="handlePaintForecast($event)"
-            :mouseDown="mouseDown"
+      <Hour
+        v-for="(hour, index) in hoursInDay(0)"
+        :key="hour.id"
+        :index="index"
+        :busy="hour.busy"
+        :forecasted="hour.forecasted"
+        :id="hour.id"
+        v-on:paintForecast="handlePaintForecast($event)"
+        :mouseDown="mouseDown"
       />
       <h2 class="day-label">T</h2>
-      <Hour v-for="(hour, index) in hoursInDay(1)"
-            :key="hour.id"
-            :index="index"
-            :busy="hour.busy"
-            :forecasted="hour.forecasted"
-            :id="hour.id"
-            v-on:paintForecast="handlePaintForecast($event)"
-            :mouseDown="mouseDown"
+      <Hour
+        v-for="(hour, index) in hoursInDay(1)"
+        :key="hour.id"
+        :index="index"
+        :busy="hour.busy"
+        :forecasted="hour.forecasted"
+        :id="hour.id"
+        v-on:paintForecast="handlePaintForecast($event)"
+        :mouseDown="mouseDown"
       />
       <h2 class="day-label">W</h2>
-      <Hour v-for="(hour, index) in hoursInDay(2)"
-            :key="hour.id"
-            :index="index"
-            :busy="hour.busy"
-            :forecasted="hour.forecasted"
-            :id="hour.id"
-            v-on:paintForecast="handlePaintForecast($event)"
-            :mouseDown="mouseDown"
+      <Hour
+        v-for="(hour, index) in hoursInDay(2)"
+        :key="hour.id"
+        :index="index"
+        :busy="hour.busy"
+        :forecasted="hour.forecasted"
+        :id="hour.id"
+        v-on:paintForecast="handlePaintForecast($event)"
+        :mouseDown="mouseDown"
       />
       <h2 class="day-label">T</h2>
-      <Hour v-for="(hour, index) in hoursInDay(3)"
-            :key="hour.id"
-            :index="index"
-            :busy="hour.busy"
-            :forecasted="hour.forecasted"
-            :id="hour.id"
-            v-on:paintForecast="handlePaintForecast($event)"
-            :mouseDown="mouseDown"
+      <Hour
+        v-for="(hour, index) in hoursInDay(3)"
+        :key="hour.id"
+        :index="index"
+        :busy="hour.busy"
+        :forecasted="hour.forecasted"
+        :id="hour.id"
+        v-on:paintForecast="handlePaintForecast($event)"
+        :mouseDown="mouseDown"
       />
       <h2 class="day-label">F</h2>
-      <Hour v-for="(hour, index) in hoursInDay(4)"
-            :key="hour.id"
-            :index="index"
-            :busy="hour.busy"
-            :forecasted="hour.forecasted"
-            :id="hour.id"
-            v-on:paintForecast="handlePaintForecast($event)"
-            :mouseDown="mouseDown"
+      <Hour
+        v-for="(hour, index) in hoursInDay(4)"
+        :key="hour.id"
+        :index="index"
+        :busy="hour.busy"
+        :forecasted="hour.forecasted"
+        :id="hour.id"
+        v-on:paintForecast="handlePaintForecast($event)"
+        :mouseDown="mouseDown"
       />
       <h2 class="day-label">S</h2>
-      <Hour v-for="(hour, index) in hoursInDay(5)"
-            :key="hour.id"
-            :index="index"
-            :busy="hour.busy"
-            :forecasted="hour.forecasted"
-            :id="hour.id"
-            v-on:paintForecast="handlePaintForecast($event)"
-            :mouseDown="mouseDown"
+      <Hour
+        v-for="(hour, index) in hoursInDay(5)"
+        :key="hour.id"
+        :index="index"
+        :busy="hour.busy"
+        :forecasted="hour.forecasted"
+        :id="hour.id"
+        v-on:paintForecast="handlePaintForecast($event)"
+        :mouseDown="mouseDown"
       />
       <h2 class="day-label">S</h2>
-      <Hour v-for="(hour, index) in hoursInDay(6)"
-            :key="hour.id"
-            :index="index"
-            :busy="hour.busy"
-            :forecasted="hour.forecasted"
-            :id="hour.id"
-            v-on:paintForecast="handlePaintForecast($event)"
-            :mouseDown="mouseDown"
+      <Hour
+        v-for="(hour, index) in hoursInDay(6)"
+        :key="hour.id"
+        :index="index"
+        :busy="hour.busy"
+        :forecasted="hour.forecasted"
+        :id="hour.id"
+        v-on:paintForecast="handlePaintForecast($event)"
+        :mouseDown="mouseDown"
       />
     </div>
   </div>
 </template>
 
 <script>
-import Hour from './Hour.vue'
-import moment from 'moment'
+import Hour from "./Hour.vue";
+import moment from "moment";
 
 export default {
-  name: 'Week',
+  name: "Week",
   components: {
     Hour
   },
-  data () {
+  props: {
+    armedForecast: String,
+    categories: Array
+  },
+  data() {
     return {
       mouseDown: false,
       lastElem: null,
-      weekOf: moment('2018-11-05T00:00:00'),
+      weekOf: moment("2018-11-05T00:00:00"),
       hours: [],
-      armedForecast: 'sleep',
       busyHours: 0
-    }
+    };
   },
   methods: {
-    startDrag () {
-      this.mouseDown = true
+    startDrag() {
+      this.mouseDown = true;
     },
-    stopDrag () {
-      this.mouseDown = false
+    stopDrag() {
+      this.mouseDown = false;
     },
-    handleTouchmove (e) {
-      e.preventDefault()
-      var changedTouch = e.changedTouches[0]
-      var elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY)
+    handleTouchmove(e) {
+      e.preventDefault();
+      var changedTouch = e.changedTouches[0];
+      var elem = document.elementFromPoint(
+        changedTouch.clientX,
+        changedTouch.clientY
+      );
       if (elem.__vue__) {
         if (elem.__vue__.$vnode.key != this.lastElem) {
-          elem.__vue__.handleHourTouch()
+          elem.__vue__.handleHourTouch();
         }
-        this.lastElem = elem.__vue__.$vnode.key
+        this.lastElem = elem.__vue__.$vnode.key;
       }
     },
-    setHours () {
+    setHours() {
       for (let i = 0; i < 168; i++) {
         let newHour = {
-          timestamp: moment(this.weekOf).add(i, 'hours'),
-          id: moment(this.weekOf).add(i, 'hours').format(),
-          forecasted: 'unassigned',
+          timestamp: moment(this.weekOf).add(i, "hours"),
+          id: moment(this.weekOf)
+            .add(i, "hours")
+            .format(),
+          forecasted: "Clear",
           busy: false
-        }
-        this.hours.push(newHour)
+        };
+        this.hours.push(newHour);
       }
     },
-    handlePaintForecast (hour) {
+    handlePaintForecast(hour) {
       var hourToChange = this.hours.filter(item => {
-        return item.id === hour.id
-      })[0]
+        return item.id === hour.id;
+      })[0];
       if (hourToChange.forecasted != this.armedForecast) {
-        hourToChange.forecasted = this.armedForecast
-        hourToChange.busy = true
-        this.busyHours++
+        hourToChange.forecasted = this.armedForecast;
+        // hourToChange.busy = true;
+        // this.busyHours++;
       } else {
-        hourToChange.forecasted = 'unassigned'
-        hourToChange.busy = false
-        this.busyHours--
+        hourToChange.forecasted = "Clear";
+        // hourToChange.busy = false;
+        // this.busyHours--;
       }
     },
-    hoursInDay (day) {
-      let start = day * 24
-      let end = start + 24
-      return this.hours.slice(start, end)
+    hoursInDay(day) {
+      let start = day * 24;
+      let end = start + 24;
+      return this.hours.slice(start, end);
     }
   },
-  mounted () {
-    window.addEventListener('mousedown', this.startDrag, { passive: true })
-    window.addEventListener('mouseup', this.stopDrag, { passive: true })
-    window.addEventListener('touchmove', this.handleTouchmove, { passive: true })
-    window.addEventListener('mousemove', this.handleMouseover, { passive: true })
-    this.setHours()
+  mounted() {
+    window.addEventListener("mousedown", this.startDrag, { passive: true });
+    window.addEventListener("mouseup", this.stopDrag, { passive: true });
+    window.addEventListener("touchmove", this.handleTouchmove, {
+      passive: true
+    });
+    window.addEventListener("mousemove", this.handleMouseover, {
+      passive: true
+    });
+    this.setHours();
   },
   computed: {
-    freeHours () {
-      return 168 - this.busyHours
+    freeHours() {
+      return 168 - this.busyHours;
     },
-    prettyWeekRange () {
-      return this.weekOf.format('MMMM Do') + '—' + this.weekOf.add(6, 'days').format('Do')
+    prettyWeekRange() {
+      return (
+        this.weekOf.format("MMMM Do") +
+        "—" +
+        this.weekOf.add(6, "days").format("Do")
+      );
     }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -209,7 +232,7 @@ export default {
 }
 .hours-legend,
 .day-label {
-  font-size: .75rem;
+  font-size: 0.75rem;
   pointer-events: none;
   -moz-user-select: none;
   -khtml-user-select: none;

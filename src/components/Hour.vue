@@ -2,6 +2,7 @@
   <time
     class="hour"
     :class="{ 'busy': busy }"
+    :style="{backgroundColor: color}"
     @mouseover="handleMouseover"
     @mousedown="paintForecast"
     v-bind:datetime="id"
@@ -17,6 +18,7 @@ export default {
     mouseDown: Boolean,
     busy: Boolean,
     forecasted: String,
+    color: String,
     id: String,
     armedForecast: String
   },

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Week msg="Hello from week" />
-    <ForecastBar :categories="categories" />
+    <Week msg="Hello from week" :armedForecast="armedForecast" :categories="categories" />
+    <ForecastBar :categories="categories" v-on:armForecast="handleArmForecast($event)" />
   </div>
 </template>
 
@@ -17,6 +17,7 @@ export default {
   },
   data() {
     return {
+      armedForecast: "Clear",
       categories: [
         {
           name: "Clear",
@@ -40,6 +41,12 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    handleArmForecast(category) {
+      console.log(category.name);
+      this.armedForecast = category.name;
+    }
   }
 };
 </script>
