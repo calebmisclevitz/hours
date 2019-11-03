@@ -18,24 +18,31 @@
           <li class="hours-legend__label">6p</li>
           <li class="hours-legend__label">9p</li>
         </ul>
-        <hour v-for="hour in hours" :key="hour.id" :hour="hour" :categories="categories" />
+        <hour
+          v-for="hour in hours"
+          :key="hour.id"
+          :hour="hour"
+          :categories="categories"
+          :mouseDown="mouseDown"
+          @setCategory="handleSetCategory(hour)"
+        />
       </div>
     </div>
+    <forecast-bar :categories="categories" @armCategory="handleArmCategory" />
   </div>
 </template>
 
 <script>
 import Hour from "./components/Hour.vue";
 // import Week from "./components/Week.vue";
-// import ForecastBar from "./components/ForecastBar.vue";
+import ForecastBar from "./components/ForecastBar.vue";
 import moment from "moment";
 
 export default {
   name: "app",
   components: {
-    Hour
-    // Week,
-    // ForecastBar
+    Hour,
+    ForecastBar
   },
   data() {
     return {
@@ -59,7 +66,9 @@ export default {
           color: "#f00"
         }
       ],
-      hours: []
+      hours: [],
+      mouseDown: false,
+      lastElem: null
     };
   },
   methods: {
@@ -77,9 +86,51 @@ export default {
         };
         this.hours.push(newHour);
       }
+    },
+    startDrag() {
+      this.mouseDown = true;
+    },
+    stopDrag() {
+      this.mouseDown = false;
+    },
+    handleTouchmove(e) {
+      e.preventDefault();
+      var changedTouch = e.changedTouches[0];
+      var elem = document.elementFromPoint(
+        changedTouch.clientX,
+        changedTouch.clientY
+      );
+      if (elem.__vue__) {
+        if (elem.__vue__.$vnode.key != this.lastElem) {
+          elem.__vue__.handleHourTouch();
+        }
+        this.lastElem = elem.__vue__.$vnode.key;
+      }
+    },
+    handleSetCategory(hour) {
+      console.log(hour);
+      var hourToChange = this.hours.filter(item => {
+        return item.id === hour.id;
+      })[0];
+      if (hourToChange.category != this.selectedCategory) {
+        hourToChange.category = this.selectedCategory;
+      } else {
+        hourToChange.category = "Clear";
+      }
+    },
+    handleArmCategory(category) {
+      this.selectedCategory = category.name;
     }
   },
   mounted() {
+    window.addEventListener("mousedown", this.startDrag, { passive: true });
+    window.addEventListener("mouseup", this.stopDrag, { passive: true });
+    window.addEventListener("touchmove", this.handleTouchmove, {
+      passive: true
+    });
+    window.addEventListener("mousemove", this.handleMouseover, {
+      passive: true
+    });
     this.initHours();
   }
 };
@@ -263,7 +314,7 @@ body {
   overflow: hidden;
   display: grid;
   grid-auto-flow: column;
-  grid-template-rows: repeat(25, 1fr);
+  grid-template-rows: repeat(24, 1fr);
   grid-template-columns: repeat(8, 1fr);
   justify-items: center;
   width: 100%;
@@ -283,7 +334,7 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(8, 1fr);
-  grid-row: 2 / 26;
+  grid-row: 1 / 25;
 }
 .day-label {
   grid-row: 1 / 2;

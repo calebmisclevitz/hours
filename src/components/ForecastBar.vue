@@ -5,7 +5,7 @@
       :key="category.id"
       class="forecast-bar__category"
       :style="{ borderColor: category.color, color: category.color }"
-      @click="armForecast(category)"
+      @click="armCategory(category)"
     >{{category.name}}</li>
   </ul>
 </template>
@@ -17,8 +17,8 @@ export default {
     categories: Array
   },
   methods: {
-    armForecast(category) {
-      this.$emit("armForecast", category);
+    armCategory(category) {
+      this.$emit("armCategory", category);
     }
   }
 };

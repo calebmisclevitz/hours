@@ -1,5 +1,10 @@
 <template>
-  <label class="hour" :style="{backgroundColor: category.color}">
+  <label
+    class="hour"
+    :style="{backgroundColor: category.color}"
+    @mousedown="handleMousedown"
+    @mouseover="handleMouseover"
+  >
     <time class="hour__time" :datetime="hour.id">{{hour.timestamp.format("dddd, hA")}}</time>
     <select class="hour__dropdown" v-model="hour.category">
       <option
@@ -18,7 +23,8 @@ export default {
   name: "Hour",
   props: {
     hour: Object,
-    categories: Array
+    categories: Array,
+    mouseDown: Boolean
   },
   computed: {
     category() {
@@ -28,17 +34,17 @@ export default {
     }
   },
   methods: {
+    handleMousedown() {
+      this.setCategory();
+    },
     handleMouseover() {
       if (this.mouseDown) {
         this.setCategory();
       }
     },
-    // handleHourTouch() {
-    //   this.paintForecast();
-    // },
-    // toggleBusy() {
-    //   this.isBusy = !this.isBusy;
-    // },
+    handleHourTouch() {
+      this.setCategory();
+    },
     setCategory() {
       this.$emit("setCategory", this);
     }
