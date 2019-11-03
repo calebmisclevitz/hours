@@ -1,7 +1,7 @@
 <template>
-  <label :style="{backgroundColor: category.color}">
-    <time :datetime="hour.id">{{hour.timestamp.format("dddd, hA")}}</time>
-    <select v-model="hour.category">
+  <label class="hour" :style="{backgroundColor: category.color}">
+    <time class="hour__time" :datetime="hour.id">{{hour.timestamp.format("dddd, hA")}}</time>
+    <select class="hour__dropdown" v-model="hour.category">
       <option
         v-for="category in categories"
         :key="hour.id + category.name"
@@ -28,32 +28,36 @@ export default {
     }
   },
   methods: {
-    // handleMouseover() {
-    //   if (this.mouseDown) {
-    //     this.paintForecast();
-    //   }
-    // },
+    handleMouseover() {
+      if (this.mouseDown) {
+        this.setCategory();
+      }
+    },
     // handleHourTouch() {
     //   this.paintForecast();
     // },
     // toggleBusy() {
     //   this.isBusy = !this.isBusy;
     // },
-    // paintForecast() {
-    //   this.$emit("paintForecast", this);
-    // }
+    setCategory() {
+      this.$emit("setCategory", this);
+    }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-/* .hour {
+.hour__time,
+.hour__dropdown {
+  display: none;
+}
+.hour {
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 0.5rem;
-  background-color: transparent;
-  border: 1px solid #444;
+  /* background-color: transparent; */
+  /* border: 1px solid #444; */
   position: relative;
   animation: pulsedown 600ms cubic-bezier(0, 0, 0.2, 1);
   margin-top: 0.125rem;
@@ -68,11 +72,11 @@ export default {
   left: -1rem;
 }
 
-.busy {
+/* .busy {
   background-color: #eee;
   border: none;
   animation: pulseup 300ms cubic-bezier(0.4, 0, 0.2, 1);
-}
+} */
 
 @keyframes pulseup {
   0% {
@@ -96,5 +100,5 @@ export default {
   100% {
     transform: scale(1);
   }
-} */
+}
 </style>

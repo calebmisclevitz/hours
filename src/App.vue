@@ -1,6 +1,26 @@
 <template>
   <div id="app">
-    <hour v-for="hour in hours" :key="hour.id" :hour="hour" :categories="categories" />
+    <div ref="week" class="week">
+      <header class="week-header">
+        <h1>Hi</h1>
+        <!-- <h1 class="week-header__date">{{this.prettyWeekRange}}</h1> -->
+        <!-- <span class="week-header__free-hours">{{this.freeHours}} hours free</span> -->
+      </header>
+
+      <div class="hours">
+        <ul class="hours-legend">
+          <li class="hours-legend__label">12a</li>
+          <li class="hours-legend__label">3a</li>
+          <li class="hours-legend__label">6a</li>
+          <li class="hours-legend__label">9a</li>
+          <li class="hours-legend__label">12p</li>
+          <li class="hours-legend__label">3p</li>
+          <li class="hours-legend__label">6p</li>
+          <li class="hours-legend__label">9p</li>
+        </ul>
+        <hour v-for="hour in hours" :key="hour.id" :hour="hour" :categories="categories" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -43,6 +63,9 @@ export default {
     };
   },
   methods: {
+    testFunction() {
+      console.log("hi");
+    },
     initHours() {
       for (let i = 0; i < 168; i++) {
         let newHour = {
@@ -215,5 +238,54 @@ body {
   display: flex;
   padding: 1rem;
   flex-direction: column;
+}
+.week {
+  background: #000;
+  color: #999;
+  height: 100%;
+  max-height: 700px;
+  max-width: 500px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.week-header {
+  margin-bottom: 1.5rem;
+  text-align: right;
+  line-height: 1.25rem;
+  font-size: 1rem;
+}
+.week-header__date {
+  color: #eee;
+}
+.hours {
+  overflow: hidden;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(25, 1fr);
+  grid-template-columns: repeat(8, 1fr);
+  justify-items: center;
+  width: 100%;
+  height: 100%;
+}
+.hours-legend,
+.day-label {
+  font-size: 0.75rem;
+  pointer-events: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.hours-legend {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(8, 1fr);
+  grid-row: 2 / 26;
+}
+.day-label {
+  grid-row: 1 / 2;
 }
 </style>
