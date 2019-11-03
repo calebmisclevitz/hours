@@ -63,6 +63,10 @@ export default {
         {
           name: "Work",
           color: "#b4dfea"
+        },
+        {
+          name: "Friends",
+          color: "#d2eab4"
         }
       ],
       hours: [],
