@@ -59,30 +59,29 @@ export default {
   display: none;
 }
 .hour {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 0.5rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
   /* background-color: transparent; */
   /* border: 1px solid #444; */
-  position: relative;
+  /* position: relative; */
   animation: pulsedown 600ms cubic-bezier(0, 0, 0.2, 1);
-  margin-top: 0.125rem;
 }
 
-.hour:after {
+/* .hour:after {
   content: "";
   position: absolute;
   top: -0.25rem;
   right: -1rem;
   bottom: -0.25rem;
   left: -1rem;
-}
-
-/* .busy {
-  background-color: #eee;
-  border: none;
-  animation: pulseup 300ms cubic-bezier(0.4, 0, 0.2, 1);
 } */
+
+.busy {
+  /* background-color: #eee; */
+  /* border: none; */
+  animation: pulseup 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
 
 @keyframes pulseup {
   0% {

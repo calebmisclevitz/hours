@@ -7,6 +7,7 @@
       :style="{ borderColor: category.color, color: category.color }"
       @click="armCategory(category)"
     >{{category.name}}</li>
+    <li class="forecast-bar__category" @click="addCategory">+</li>
   </ul>
 </template>
 
@@ -19,6 +20,15 @@ export default {
   methods: {
     armCategory(category) {
       this.$emit("armCategory", category);
+    },
+    addCategory() {
+      let name = prompt("Category name:");
+      let color = prompt("Category color:");
+      let newCategory = {
+        name,
+        color
+      };
+      this.$emit("addCategory", newCategory);
     }
   }
 };

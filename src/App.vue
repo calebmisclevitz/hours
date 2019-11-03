@@ -28,13 +28,16 @@
         />
       </div>
     </div>
-    <forecast-bar :categories="categories" @armCategory="handleArmCategory" />
+    <forecast-bar
+      :categories="categories"
+      @armCategory="handleArmCategory"
+      @addCategory="handleAddCategory"
+    />
   </div>
 </template>
 
 <script>
 import Hour from "./components/Hour.vue";
-// import Week from "./components/Week.vue";
 import ForecastBar from "./components/ForecastBar.vue";
 import moment from "moment";
 
@@ -51,19 +54,15 @@ export default {
       categories: [
         {
           name: "Clear",
-          color: "#666"
+          color: "#333"
         },
         {
           name: "Sleep",
-          color: "#00f"
+          color: "#eab4e0"
         },
         {
           name: "Work",
-          color: "#0f0"
-        },
-        {
-          name: "Friends",
-          color: "#f00"
+          color: "#b4dfea"
         }
       ],
       hours: [],
@@ -120,6 +119,9 @@ export default {
     },
     handleArmCategory(category) {
       this.selectedCategory = category.name;
+    },
+    handleAddCategory(newCategory) {
+      this.categories.push(newCategory);
     }
   },
   mounted() {
@@ -277,7 +279,7 @@ body {
   justify-content: center;
   flex-direction: column;
   overflow: hidden;
-  /* background: #000; */
+  background: #000;
 }
 
 #app {
